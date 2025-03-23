@@ -1,0 +1,40 @@
+@HOST = http://localhost:8080
+
+POST {{HOST}}/users
+Content-Type: application/json
+
+{
+  "username": "user3",
+  "email": "user3@gmail.com",
+  "password": "123456"
+}
+
+###
+
+POST {{HOST}}/auth
+Content-Type: application/json
+
+{
+  "email": "user2@gmail.com",
+  "password": "123456"
+}
+
+###
+
+GET {{HOST}}/users/i
+
+###
+
+POST {{HOST}}/tasks
+Content-Type: application/json
+
+{
+  "name": "teste",
+  "description": "testetetet"
+}
+
+###
+
+GET {{HOST}}/tasks
+
+###

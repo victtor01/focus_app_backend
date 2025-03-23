@@ -1,0 +1,1 @@
+CREATE DATABASE focus_app;
