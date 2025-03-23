@@ -5,10 +5,12 @@ import com.focus.app.core.interfaces.JwtService;
 import com.focus.app.core.utils.AuthenticationClaims;
 import com.focus.app.core.utils.CookiesKeys;
 import com.focus.app.infra.config.errors.BadRequestException;
+import com.focus.app.infra.config.errors.UnauthorizedException;
 import com.focus.app.infra.repositories.UsersRepository;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.UnavailableException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -57,7 +59,6 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (isSessionExpired) {
             filterChain.doFilter(request, response);
-            return;
         }
 
         if (isTokenExpired) {
@@ -90,8 +91,8 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         String newAccessToken = jwtService.generate(claimsMap, email);
 
-         ResponseCookie newAccessTokenCookie = cookiesService.createTokenCookie(newAccessToken);
-         response.addHeader(HttpHeaders.SET_COOKIE, newAccessTokenCookie.toString());
+        ResponseCookie newAccessTokenCookie = cookiesService.createTokenCookie(newAccessToken);
+        response.addHeader(HttpHeaders.SET_COOKIE, newAccessTokenCookie.toString());
 
         return newAccessToken;
     }
