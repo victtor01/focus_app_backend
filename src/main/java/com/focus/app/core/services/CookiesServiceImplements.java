@@ -25,18 +25,17 @@ public class CookiesServiceImplements implements CookiesService {
             .httpOnly(true)
             .secure(false)
             .path("/")
-            .maxAge(Duration.ofHours(1))
+            .maxAge(jwtProperties.getJwtExpiration())
             .build();
     }
 
     @Override
     public ResponseCookie createRefreshTokenCookie(String refreshToken) {
-        long cookieLongMaxAgeMinutes = 60 * 60;
         return ResponseCookie.from(CookiesKeys.REFRESH_TOKEN, refreshToken)
             .httpOnly(true)
             .secure(false)
             .path("/")
-            .maxAge(Duration.ofHours(5))
+            .maxAge(jwtProperties.getJwtLongExpiration())
             .build();
     }
 }

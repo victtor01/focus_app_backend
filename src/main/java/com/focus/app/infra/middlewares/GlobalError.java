@@ -58,7 +58,6 @@ public class GlobalError {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-
     @ExceptionHandler({UnauthorizedException.class})
     public ResponseEntity<ErrorResponse> handleResourceUnauthorized(UnauthorizedException ex) {
         ErrorResponse error = new ErrorResponse(ex.getType(), ex.getMessage(), ex.getStatusCode());

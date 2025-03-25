@@ -1,6 +1,5 @@
 package com.focus.app.core.models;
 
-import com.focus.app.core.utils.EmailAddress;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

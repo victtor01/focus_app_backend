@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public interface TasksService {
     Task create(User user, CreateTaskRecord createTaskRecord);
+
     void delete(UUID taskId, User user);
+
     List<TaskDTO> findByUser(User user);
 }
