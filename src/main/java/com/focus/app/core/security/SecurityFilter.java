@@ -54,11 +54,11 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         boolean isTokenExpired = this.jwtService.isTokenExpired(accessToken);
         boolean isRefreshTokenExpired = this.jwtService.isTokenExpired(refreshToken);
-
         boolean isSessionExpired = isTokenExpired && isRefreshTokenExpired;
 
         if (isSessionExpired) {
             filterChain.doFilter(request, response);
+            return;
         }
 
         if (isTokenExpired) {

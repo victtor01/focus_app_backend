@@ -74,4 +74,16 @@ public class TasksLogServiceImplements implements TasksLogService {
 
         return calendar;
     }
+
+    @Override
+    public List<TaskLogDTO> findAllByDate(LocalDate dateT) {
+        UUID userId = authenticationUtils.getId();
+
+        List<TaskLogDTO> tasksLogDTOs = tasksLogRepository.findByDayAndUserId(dateT, userId)
+            .stream()
+            .map(TaskLogDTO::toEntity)
+            .toList();
+
+        return tasksLogDTOs;
+    }
 }

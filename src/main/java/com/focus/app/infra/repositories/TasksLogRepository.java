@@ -12,4 +12,5 @@ import java.util.UUID;
 @Repository
 public interface TasksLogRepository extends JpaRepository<TaskLog, UUID> {
     List<TaskLog> findByDayBetweenAndUserId(LocalDate startDate, LocalDate endDate, UUID userId);
+    List<TaskLog> findByDayAndUserId(LocalDate day, UUID userId);
 }

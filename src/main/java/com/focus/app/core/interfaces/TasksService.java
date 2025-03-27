@@ -13,5 +13,5 @@ public interface TasksService {
 
     void delete(UUID taskId, User user);
 
-    List<TaskDTO> findByUser(User user);
+    List<TaskDTO> findAllByUser(User user);
 }

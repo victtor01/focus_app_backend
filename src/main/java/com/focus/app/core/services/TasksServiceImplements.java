@@ -44,7 +44,7 @@ public class TasksServiceImplements implements TasksService {
     }
 
     @Override
-    public List<TaskDTO> findByUser(User user) {
+    public List<TaskDTO> findAllByUser(User user) {
         return this.tasksRepository.findAllByUser(user);
     }
 

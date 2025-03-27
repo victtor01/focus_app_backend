@@ -40,7 +40,7 @@ public class TasksController {
     public ResponseEntity<List<TaskDTO>> findAll() {
         User user = authenticationUtils.getUser();
 
-        List<TaskDTO> tasks = tasksService.findByUser(user);
+        List<TaskDTO> tasks = tasksService.findAllByUser(user);
 
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }

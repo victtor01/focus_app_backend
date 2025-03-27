@@ -8,9 +8,11 @@ import com.focus.app.core.records.CreateTaskLogRecord;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 public interface TasksLogService {
     TaskLog create(CreateTaskLogRecord createTaskLogRecord, User user);
+
     Map<LocalDate, List<TaskLogDTO>> getCalendar(LocalDate start, LocalDate end);
+
+    List<TaskLogDTO> findAllByDate(LocalDate dateT);
 }

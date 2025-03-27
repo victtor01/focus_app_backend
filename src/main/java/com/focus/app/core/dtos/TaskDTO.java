@@ -1,16 +1,17 @@
 package com.focus.app.core.dtos;
 
-import com.focus.app.core.models.Reminder;
 import com.focus.app.core.models.Task;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
+@Builder
 @AllArgsConstructor
 public class TaskDTO {
     private UUID id;
@@ -26,6 +27,16 @@ public class TaskDTO {
         this.reminders = task.getReminders()
             .stream()
             .map(ReminderDTO::new)
-            .collect(Collectors.toList());
+            .toList();
+    }
+
+    public static TaskDTO toEntity(Task task) {
+        if (task == null) return null;
+
+        return TaskDTO.builder()
+            .id(task.getId())
+            .name(task.getName())
+            .description(task.getDescription())
+            .build();
     }
 }

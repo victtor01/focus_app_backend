@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/tasks-log")
@@ -33,6 +32,13 @@ public class TasksLogController {
         TaskLog created = this.tasksLogService.create(createTaskLogRecord, user);
 
         return ResponseEntity.ok(created);
+    }
+
+    @GetMapping("{date}")
+    public ResponseEntity findAllByDate(@PathVariable LocalDate date) {
+        List<TaskLogDTO> tasks = this.tasksLogService.findAllByDate(date);
+
+        return ResponseEntity.ok(tasks);
     }
 
     @GetMapping("/list")
