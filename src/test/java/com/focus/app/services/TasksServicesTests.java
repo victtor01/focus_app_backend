@@ -1,11 +1,10 @@
 package com.focus.app.services;
 
-import com.focus.app.core.interfaces.TasksService;
-import com.focus.app.core.models.User;
-import com.focus.app.core.records.CreateTaskRecord;
-import com.focus.app.core.services.TasksServiceImplements;
-import com.focus.app.infra.config.errors.BadRequestException;
-import com.focus.app.infra.repositories.TasksRepository;
+import com.focus.app.domain.models.User;
+import com.focus.app.domain.records.CreateTaskRecord;
+import com.focus.app.application.services.TasksServiceImplements;
+import com.focus.app.shared.exceptions.BadRequestException;
+import com.focus.app.adapters.outbound.persistence.jpa.JpaTasksRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -17,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TasksServicesTests {
 
     @Mock
-    private TasksRepository tasksRepository;
+    private JpaTasksRepository tasksRepository;
 
     @InjectMocks
     private TasksServiceImplements tasksService;
