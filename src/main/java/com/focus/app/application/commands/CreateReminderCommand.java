@@ -1,20 +1,14 @@
-package com.focus.app.domain.records;
+package com.focus.app.application.commands;
 
 import com.focus.app.domain.enums.ReminderDay;
-import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-public record CreateReminderRecord(
-    @NotNull
+public record CreateReminderCommand(
     UUID taskId,
-
-    @NotNull
     LocalDateTime reminderTime,
-
-    @NotNull
     List<ReminderDay> daysOfWeek
 ) {
 }

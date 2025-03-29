@@ -1,6 +1,7 @@
-package com.focus.app.infrastructure.security;
+package com.focus.app.infrastructure.config.securityConfig;
 
 import com.focus.app.infrastructure.config.cors.CorsConfig;
+import com.focus.app.infrastructure.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

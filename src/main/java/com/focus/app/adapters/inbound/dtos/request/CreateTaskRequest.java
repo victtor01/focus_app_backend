@@ -1,14 +1,20 @@
-package com.focus.app.domain.records;
+package com.focus.app.adapters.inbound.dtos.request;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public record CreateTaskRecord(
+import java.util.List;
+import java.util.UUID;
+
+public record CreateTaskRequest(
     @NotEmpty(message = "field name not found!")
     @NotNull(message = "name of task is required")
     String name,
 
     String description,
-    String color
+
+    String color,
+
+    List<UUID> categoriesIds
 ) {
 }

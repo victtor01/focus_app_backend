@@ -1,9 +1,9 @@
 package com.focus.app.adapters.inbound.controllers;
 
+import com.focus.app.adapters.inbound.dtos.request.AuthRecordRequest;
 import com.focus.app.application.ports.in.AuthService;
 import com.focus.app.application.ports.in.CookiesService;
-import com.focus.app.domain.records.AuthRecord;
-import com.focus.app.domain.records.TokenRecord;
+import com.focus.app.application.commands.TokenCommand;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,8 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity auth(@RequestBody @Valid AuthRecord authRecord) {
-        TokenRecord tokens = this.authService.auth(authRecord.email(), authRecord.password());
+    public ResponseEntity auth(@RequestBody @Valid AuthRecordRequest authRecord) {
+        TokenCommand tokens = this.authService.auth(authRecord.email(), authRecord.password());
 
         ResponseCookie accessTokenCookie = cookiesService.createTokenCookie(tokens.accessToken());
         ResponseCookie refreshTokenCookie = cookiesService.createRefreshTokenCookie(tokens.refreshToken());

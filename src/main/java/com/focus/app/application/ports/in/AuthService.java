@@ -1,7 +1,7 @@
 package com.focus.app.application.ports.in;
 
-import com.focus.app.domain.records.TokenRecord;
+import com.focus.app.application.commands.TokenCommand;
 
 public interface AuthService {
-    TokenRecord auth(String email, String password);
+    TokenCommand auth(String email, String password);
 }

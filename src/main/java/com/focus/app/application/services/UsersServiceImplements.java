@@ -3,7 +3,7 @@ package com.focus.app.application.services;
 
 import com.focus.app.application.ports.in.UsersService;
 import com.focus.app.domain.models.User;
-import com.focus.app.domain.records.CreateUserRecord;
+import com.focus.app.application.commands.CreateUserCommand;
 import com.focus.app.shared.utils.EmailAddress;
 import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.adapters.outbound.persistence.repositories.UsersRepositoryImplements;
@@ -25,7 +25,7 @@ public class UsersServiceImplements implements UsersService {
     }
 
     @Override
-    public User save(CreateUserRecord createUserRecord) {
+    public User save(CreateUserCommand createUserRecord) {
         User user = new User();
 
         EmailAddress address = new EmailAddress(createUserRecord.email());

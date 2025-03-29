@@ -1,5 +1,6 @@
 package com.focus.app.adapters.inbound.dtos;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.focus.app.domain.models.Task;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,17 +14,12 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskDTO {
     private UUID id;
     private String name;
     private String description;
     private List<ReminderDTO> reminders;
-
-    public TaskDTO(Task task) {
-        this.id = task.getId();
-        this.name = task.getName();
-        this.description = task.getDescription();
-    }
 
     public static TaskDTO toEntity(Task task) {
         if (task == null) return null;

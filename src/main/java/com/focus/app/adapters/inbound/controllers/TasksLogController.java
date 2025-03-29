@@ -1,11 +1,12 @@
 package com.focus.app.adapters.inbound.controllers;
 
 import com.focus.app.adapters.inbound.dtos.TaskLogDTO;
+import com.focus.app.adapters.inbound.dtos.request.CreateTaskLogRequest;
 import com.focus.app.application.ports.in.AuthenticationUtils;
 import com.focus.app.application.ports.in.TasksLogService;
+import com.focus.app.application.commands.CreateTaskLogCommand;
 import com.focus.app.domain.models.TaskLog;
 import com.focus.app.domain.models.User;
-import com.focus.app.domain.records.CreateTaskLogRecord;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,10 +27,16 @@ public class TasksLogController {
     }
 
     @PostMapping()
-    public ResponseEntity<TaskLog> create(@RequestBody @Valid CreateTaskLogRecord createTaskLogRecord) {
+    public ResponseEntity<TaskLog> create(@RequestBody @Valid CreateTaskLogRequest createTaskLogRequest) {
         User user = this.authenticationUtils.getUser();
 
-        TaskLog created = this.tasksLogService.create(createTaskLogRecord, user);
+        CreateTaskLogCommand createTaskLogCommand = new CreateTaskLogCommand(
+            createTaskLogRequest.day(),
+            createTaskLogRequest.taskId(),
+            createTaskLogRequest.hour()
+        );
+
+        TaskLog created = this.tasksLogService.create(createTaskLogCommand, user);
 
         return ResponseEntity.ok(created);
     }

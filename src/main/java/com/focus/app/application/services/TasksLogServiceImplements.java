@@ -8,7 +8,7 @@ import com.focus.app.application.ports.out.TasksRepositoryPort;
 import com.focus.app.domain.models.Task;
 import com.focus.app.domain.models.TaskLog;
 import com.focus.app.domain.models.User;
-import com.focus.app.domain.records.CreateTaskLogRecord;
+import com.focus.app.application.commands.CreateTaskLogCommand;
 import com.focus.app.shared.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class TasksLogServiceImplements implements TasksLogService {
     }
 
     @Override
-    public TaskLog create(CreateTaskLogRecord createTaskLogRecord, User user) {
+    public TaskLog create(CreateTaskLogCommand createTaskLogRecord, User user) {
         Task task = this.tasksRepository.findById(createTaskLogRecord.taskId()).orElseThrow(
             () -> new NotFoundException("task to add log not found!")
         );

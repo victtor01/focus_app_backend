@@ -1,6 +1,5 @@
 package com.focus.app.application.ports.out;
 
-import com.focus.app.domain.records.CreateUserRecord;
 import com.focus.app.domain.models.User;
 
 import java.util.Optional;

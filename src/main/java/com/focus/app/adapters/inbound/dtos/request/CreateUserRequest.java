@@ -1,9 +1,9 @@
-package com.focus.app.domain.records;
+package com.focus.app.adapters.inbound.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-public record CreateUserRecord(
+public record CreateUserRequest(
     @NotBlank(message = "username is required")
     @Size(min = 3, max = 20, message = "username length is invalid")
     String username,

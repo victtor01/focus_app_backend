@@ -1,10 +1,11 @@
 package com.focus.app.adapters.inbound.controllers;
 
 import com.focus.app.adapters.inbound.dtos.ReminderDTO;
+import com.focus.app.adapters.inbound.dtos.request.CreateReminderRequest;
+import com.focus.app.application.commands.CreateReminderCommand;
 import com.focus.app.application.ports.in.AuthenticationUtils;
 import com.focus.app.application.ports.in.RemindersService;
 import com.focus.app.domain.models.User;
-import com.focus.app.domain.records.CreateReminderRecord;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,10 +29,16 @@ public class RemindersController {
 
 
     @PostMapping
-    public ResponseEntity<ReminderDTO> create(@RequestBody @Valid CreateReminderRecord createReminderRecord) {
+    public ResponseEntity<ReminderDTO> create(@RequestBody @Valid CreateReminderRequest createReminderRecord) {
         User user = authenticationUtils.getUser();
 
-        ReminderDTO reminderDTO = this.remindersService.create(user, createReminderRecord);
+        CreateReminderCommand createReminderCommand = new CreateReminderCommand(
+            createReminderRecord.taskId(),
+            createReminderRecord.reminderTime(),
+            createReminderRecord.daysOfWeek()
+        );
+
+        ReminderDTO reminderDTO = this.remindersService.create(user, createReminderCommand);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(reminderDTO);
     }

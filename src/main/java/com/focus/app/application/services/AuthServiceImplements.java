@@ -2,7 +2,7 @@ package com.focus.app.application.services;
 
 import com.focus.app.application.ports.in.AuthService;
 import com.focus.app.application.ports.in.JwtService;
-import com.focus.app.domain.records.TokenRecord;
+import com.focus.app.application.commands.TokenCommand;
 import com.focus.app.shared.utils.AuthenticationClaims;
 import com.focus.app.shared.exceptions.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AuthServiceImplements implements AuthService {
     }
 
     @Override
-    public TokenRecord auth(String email, String password) throws RuntimeException {
+    public TokenCommand auth(String email, String password) throws RuntimeException {
         Authentication authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
         try {
@@ -48,7 +48,7 @@ public class AuthServiceImplements implements AuthService {
             String accessToken = jwtService.generate(claims, auth.getName());
             String refreshToken = this.jwtService.generateLong(claims, auth.getName());
 
-            return new TokenRecord(accessToken, refreshToken);
+            return new TokenCommand(accessToken, refreshToken);
         } catch (Exception e) {
             throw new BadRequestException("email or password incorrect");
         }

@@ -1,12 +1,10 @@
 package com.focus.app.adapters.outbound.entities;
 
-import com.focus.app.domain.models.Task;
+import com.focus.app.domain.models.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -14,6 +12,7 @@ import java.util.UUID;
 @Builder
 @Entity
 @Table(name = "categories")
+@NoArgsConstructor
 @AllArgsConstructor
 public class JpaTaskCategoryEntity {
     @Id
@@ -26,7 +25,9 @@ public class JpaTaskCategoryEntity {
     @Column(nullable = false)
     private String color;
 
+    @ManyToMany
+    private List<JpaTaskEntity> tasks;
+
     @ManyToOne
-    @JoinColumn(name = "task_id")
-    private JpaTaskEntity task;
+    private JpaUserEntity user;
 }

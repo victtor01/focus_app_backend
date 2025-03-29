@@ -1,8 +1,5 @@
 package com.focus.app.domain.models;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -14,7 +11,8 @@ public class TaskLog {
     private User user;
     private Task task;
 
-    public TaskLog() {}
+    public TaskLog() {
+    }
 
     public TaskLog(UUID id, LocalDate day, LocalTime hour, User user, Task task) {
         this.id = id;

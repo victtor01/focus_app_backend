@@ -1,4 +1,4 @@
-package com.focus.app.domain.records;
+package com.focus.app.adapters.inbound.dtos.request;
 
 import jakarta.validation.constraints.NotNull;
 
@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
 
-public record CreateTaskLogRecord(
+public record CreateTaskLogRequest(
     @NotNull
     LocalDate day,
 

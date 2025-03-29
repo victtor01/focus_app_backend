@@ -25,6 +25,8 @@ public class ReminderDTO {
     }
 
     public static ReminderDTO toEntity(Reminder reminder) {
+        if(reminder == null) return null;
+
         return ReminderDTO.builder()
             .id(reminder.getId())
             .reminderTime(reminder.getReminderTime())
