@@ -17,5 +17,7 @@ security:
     expiration-time: 50000
     long-expiration-time: 1000000
 
+debug: true
+
 cors:
   origin: http://10.220.0.8:3000

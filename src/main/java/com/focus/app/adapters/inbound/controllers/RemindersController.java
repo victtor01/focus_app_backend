@@ -12,9 +12,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/reminders")
@@ -54,4 +56,12 @@ public class RemindersController {
         return ResponseEntity.status(HttpStatus.OK).body(reminders.stream().map(ReminderMapper::toResponse).toList());
     }
 
+    @DeleteMapping("{reminderId}")
+    public ResponseEntity<String> delete(@PathVariable UUID reminderId) {
+        User user = authenticationUtils.getUser();
+
+        this.remindersService.delete(user, reminderId);
+
+        return ResponseEntity.ok("reminder deleted");
+    }
 }

@@ -10,8 +10,11 @@ import com.focus.app.domain.models.reminders.Reminder;
 import com.focus.app.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public class TasksRemindersRepositoryImplements implements RemindersRepositoryPort {
@@ -37,5 +40,15 @@ public class TasksRemindersRepositoryImplements implements RemindersRepositoryPo
         JpaReminderEntity jpaReminderEntity = ReminderMapper.toEntity(reminder);
         JpaReminderEntity created = this.jpaRemindersRepository.save(jpaReminderEntity);
         return ReminderMapper.toDomain(created);
+    }
+
+    @Override
+    public Optional<Reminder> findById(UUID reminderId) {
+        return this.jpaRemindersRepository.findById(reminderId).map(ReminderMapper::toDomain);
+    }
+
+    @Override
+    public void delete(UUID reminderId) {
+        jpaRemindersRepository.deleteById(reminderId);
     }
 }

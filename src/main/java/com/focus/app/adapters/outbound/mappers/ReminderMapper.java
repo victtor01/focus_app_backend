@@ -17,6 +17,8 @@ public class ReminderMapper {
     }
 
     public static Reminder toDomain(JpaReminderEntity reminder) {
+        if(reminder == null) return null;
+
         return Reminder.builder()
             .id(reminder.getId())
             .customReminderDates(reminder.getCustomReminderDates())

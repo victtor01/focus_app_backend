@@ -41,10 +41,8 @@ public class JpaReminderEntity {
     @Column(name = "repeat")
     private boolean isRecurring;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "task_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne()
+    @JoinColumn(name = "task_id")
     private JpaTaskEntity task;
 
     @ManyToOne

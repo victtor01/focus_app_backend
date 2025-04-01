@@ -11,11 +11,14 @@ import com.focus.app.domain.models.user.User;
 import com.focus.app.application.commands.CreateReminderCommand;
 import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.shared.exceptions.NotFoundException;
+import com.focus.app.shared.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class RemindersServiceImplements implements RemindersService {
@@ -54,13 +57,13 @@ public class RemindersServiceImplements implements RemindersService {
         switch (reminderType) {
             case WEEKLY -> {
                 boolean isValidWeek = WeekValidator.areDatesInSameWeek(createReminderRecord.daysOfWeek());
-                if(!isValidWeek) {
+                if (!isValidWeek) {
                     throw new BadRequestException("week days is invalid!");
                 }
             }
             case CUSTOM -> {
                 boolean isValidCustomDates = WeekValidator.areDatesInSameMonth(createReminderRecord.customRemindersDates());
-                if(!isValidCustomDates) {
+                if (!isValidCustomDates) {
                     throw new BadRequestException("month days is invalid format");
                 }
             }
@@ -81,5 +84,21 @@ public class RemindersServiceImplements implements RemindersService {
     @Override
     public List<Reminder> findAllByUser(User user) {
         return this.remindersRepository.findAllByUser(user);
+    }
+
+    @Override
+    @Transactional
+    public void delete(User user, UUID reminderId) {
+        Reminder reminder = this.remindersRepository.findById(reminderId).orElseThrow(
+            () -> new NotFoundException("not found reminder")
+        );
+
+        User userIn = reminder.getUser();
+
+        if (!userIn.getId().equals(user.getId())) {
+            throw new UnauthorizedException("this reminder not belongs to you");
+        }
+
+        this.remindersRepository.delete(reminderId);
     }
 }
