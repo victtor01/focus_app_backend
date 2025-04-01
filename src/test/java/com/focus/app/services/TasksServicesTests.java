@@ -1,7 +1,7 @@
 package com.focus.app.services;
 
 import com.focus.app.application.commands.CreateTaskCommand;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.application.services.TasksServiceImplements;
 import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.adapters.outbound.persistence.jpa.JpaTasksRepository;

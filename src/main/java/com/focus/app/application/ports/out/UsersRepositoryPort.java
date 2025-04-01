@@ -1,6 +1,6 @@
 package com.focus.app.application.ports.out;
 
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 
 import java.util.Optional;
 

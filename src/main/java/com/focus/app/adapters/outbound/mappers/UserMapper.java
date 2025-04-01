@@ -1,7 +1,7 @@
 package com.focus.app.adapters.outbound.mappers;
 
 import com.focus.app.adapters.outbound.entities.JpaUserEntity;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 
 public class UserMapper {
     public static JpaUserEntity toEntity(User user) {

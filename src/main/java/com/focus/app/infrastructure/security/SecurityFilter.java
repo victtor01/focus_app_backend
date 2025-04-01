@@ -4,7 +4,7 @@ import com.focus.app.adapters.outbound.mappers.UserMapper;
 import com.focus.app.application.ports.in.CookiesService;
 import com.focus.app.application.ports.in.JwtService;
 import com.focus.app.application.ports.out.UsersRepositoryPort;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.shared.utils.AuthenticationClaims;
 import com.focus.app.shared.utils.CookiesKeys;
 import com.focus.app.shared.exceptions.BadRequestException;

@@ -1,14 +1,16 @@
 package com.focus.app.application.commands;
 
 import com.focus.app.domain.enums.ReminderDay;
+import com.focus.app.domain.enums.ReminderType;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 public record CreateReminderCommand(
     UUID taskId,
-    LocalDateTime reminderTime,
-    List<ReminderDay> daysOfWeek
+    List<LocalDate> customRemindersDates,
+    List<LocalDate> daysOfWeek,
+    ReminderType reminderType
 ) {
 }

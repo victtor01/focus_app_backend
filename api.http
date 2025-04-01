@@ -1,6 +1,12 @@
 @HOST = http://localhost:8080
 
 
+
+
+GET {{HOST}} HTTP/1.1
+
+###
+
 GET {{HOST}}/auth HTTP/1.1
 ###
 

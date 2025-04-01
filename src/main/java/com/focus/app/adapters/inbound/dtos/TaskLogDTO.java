@@ -1,6 +1,7 @@
 package com.focus.app.adapters.inbound.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.focus.app.adapters.inbound.dtos.response.TaskResponse;
 import com.focus.app.domain.models.TaskLog;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,7 +20,7 @@ import java.util.UUID;
 public class TaskLogDTO {
     private UUID id;
     private LocalDate day;
-    private TaskDTO task;
+    private TaskResponse task;
     private LocalTime hour;
 
     public static TaskLogDTO toEntity(TaskLog taskLog) {
@@ -28,7 +29,7 @@ public class TaskLogDTO {
         return TaskLogDTO.builder()
             .day(taskLog.getDay())
             .id(taskLog.getId())
-            .task(TaskDTO.toEntity(taskLog.getTask()))
+            .task(null)
             .hour(taskLog.getHour())
             .build();
     }

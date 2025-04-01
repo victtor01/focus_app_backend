@@ -4,7 +4,7 @@ import com.focus.app.adapters.inbound.dtos.request.CreateUserRequest;
 import com.focus.app.application.ports.in.AuthenticationUtils;
 import com.focus.app.application.ports.in.UsersService;
 import com.focus.app.application.commands.CreateUserCommand;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

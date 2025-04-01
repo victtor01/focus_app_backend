@@ -4,7 +4,7 @@ import com.focus.app.adapters.outbound.entities.JpaUserEntity;
 import com.focus.app.adapters.outbound.mappers.UserMapper;
 import com.focus.app.adapters.outbound.persistence.jpa.JpaUserRepository;
 import com.focus.app.application.ports.out.UsersRepositoryPort;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

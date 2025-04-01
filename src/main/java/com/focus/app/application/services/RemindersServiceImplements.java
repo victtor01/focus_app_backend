@@ -1,17 +1,20 @@
 package com.focus.app.application.services;
 
-import com.focus.app.adapters.inbound.dtos.ReminderDTO;
 import com.focus.app.application.ports.in.RemindersService;
 import com.focus.app.application.ports.out.RemindersRepositoryPort;
 import com.focus.app.application.ports.out.TasksRepositoryPort;
-import com.focus.app.domain.models.Reminder;
-import com.focus.app.domain.models.Task;
-import com.focus.app.domain.models.User;
+import com.focus.app.application.utils.WeekValidator;
+import com.focus.app.domain.enums.ReminderType;
+import com.focus.app.domain.models.reminders.Reminder;
+import com.focus.app.domain.models.task.Task;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.application.commands.CreateReminderCommand;
+import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.shared.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -26,30 +29,57 @@ public class RemindersServiceImplements implements RemindersService {
         this.tasksRepository = tasksRepository;
     }
 
-    @Override
-    public ReminderDTO create(User user, CreateReminderCommand createReminderRecord) {
+    private void isValidReminderTypeWeek(ReminderType reminderType, List<LocalDate> daysOfWeek) {
+        if (reminderType == ReminderType.WEEKLY && daysOfWeek == null) {
+            throw new BadRequestException("days of week is required when reminderType is WEEKLY");
+        }
+    }
 
+    private void isValidReminderTypeCustom(ReminderType reminderType, List<LocalDate> customDates) {
+        if (reminderType == ReminderType.CUSTOM && customDates == null) {
+            throw new BadRequestException("custom days is required when reminderType is CUSTOM");
+        }
+    }
+
+    @Override
+    public Reminder save(User user, CreateReminderCommand createReminderRecord) {
         Task task = this.tasksRepository.findById(createReminderRecord.taskId()).orElseThrow(
             () -> new NotFoundException("task to add reminder not found")
         );
 
-        Reminder reminder = new Reminder();
-        reminder.setReminderTime(createReminderRecord.reminderTime());
-        reminder.setDaysOfWeek(createReminderRecord.daysOfWeek());
-        reminder.setReminderTime(createReminderRecord.reminderTime());
-        reminder.setTask(task);
-        reminder.setUser(user);
+        ReminderType reminderType = createReminderRecord.reminderType();
+        this.isValidReminderTypeWeek(reminderType, createReminderRecord.daysOfWeek());
+        this.isValidReminderTypeCustom(reminderType, createReminderRecord.customRemindersDates());
 
+        switch (reminderType) {
+            case WEEKLY -> {
+                boolean isValidWeek = WeekValidator.areDatesInSameWeek(createReminderRecord.daysOfWeek());
+                if(!isValidWeek) {
+                    throw new BadRequestException("week days is invalid!");
+                }
+            }
+            case CUSTOM -> {
+                boolean isValidCustomDates = WeekValidator.areDatesInSameMonth(createReminderRecord.customRemindersDates());
+                if(!isValidCustomDates) {
+                    throw new BadRequestException("month days is invalid format");
+                }
+            }
+        }
 
-        Reminder created = this.remindersRepository.save(reminder);
+        Reminder reminder = Reminder.builder()
+            .customReminderDates(createReminderRecord.customRemindersDates())
+            .reminderDaysOfWeek(createReminderRecord.daysOfWeek())
+            .reminderType(reminderType)
+            .reminderHour(null)
+            .user(user)
+            .task(task)
+            .build();
 
-        return new ReminderDTO(created);
+        return this.remindersRepository.save(reminder);
     }
 
     @Override
-    public List<ReminderDTO> findAllByUser(User user) {
-        return this.remindersRepository.findAllByUser(user)
-            .stream()
-            .map(ReminderDTO::toEntity).toList();
+    public List<Reminder> findAllByUser(User user) {
+        return this.remindersRepository.findAllByUser(user);
     }
 }

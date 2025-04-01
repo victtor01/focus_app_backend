@@ -1,4 +1,6 @@
-package com.focus.app.domain.models;
+package com.focus.app.domain.models.user;
+
+import com.focus.app.domain.models.user.builder.UserBuilder;
 
 import java.util.UUID;
 
@@ -19,7 +21,15 @@ public class User {
         this.password = password;
     }
 
-    public User () {}
+    public User(UserBuilder userBuilder) {
+        this.id = userBuilder.getId();
+        this.username = userBuilder.getUsername();
+        this.email = userBuilder.getEmail();
+        this.password = userBuilder.getPassword();
+    }
+
+    public User() {
+    }
 
     public UUID getId() {
         return id;

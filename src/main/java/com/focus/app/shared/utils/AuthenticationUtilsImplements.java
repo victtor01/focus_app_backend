@@ -3,7 +3,7 @@ package com.focus.app.shared.utils;
 import com.focus.app.adapters.outbound.entities.JpaUserEntity;
 import com.focus.app.adapters.outbound.mappers.UserMapper;
 import com.focus.app.application.ports.in.AuthenticationUtils;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;

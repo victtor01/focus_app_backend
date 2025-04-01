@@ -5,8 +5,8 @@ import com.focus.app.adapters.outbound.mappers.TaskMapper;
 import com.focus.app.adapters.outbound.mappers.UserMapper;
 import com.focus.app.adapters.outbound.persistence.jpa.JpaTasksRepository;
 import com.focus.app.application.ports.out.TasksRepositoryPort;
-import com.focus.app.domain.models.Task;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.task.Task;
+import com.focus.app.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

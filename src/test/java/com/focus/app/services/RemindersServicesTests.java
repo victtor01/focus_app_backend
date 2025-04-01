@@ -1,8 +1,8 @@
 package com.focus.app.services;
 
 import com.focus.app.domain.enums.ReminderDay;
-import com.focus.app.domain.models.Task;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.task.Task;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.application.commands.CreateReminderCommand;
 import com.focus.app.application.services.RemindersServiceImplements;
 import com.focus.app.shared.exceptions.NotFoundException;
@@ -54,7 +54,7 @@ public class RemindersServicesTests {
         when(tasksRepository.findById(createReminderRecord.taskId())).thenReturn(Optional.empty());
 
         NotFoundException exception = assertThrows(NotFoundException.class, () -> {
-            remindersService.create(user, createReminderRecord);
+            remindersService.save(user, createReminderRecord);
         });
 
         assertEquals("task to add reminder not found", exception.getMessage());

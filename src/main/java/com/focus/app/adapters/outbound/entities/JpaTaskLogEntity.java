@@ -1,7 +1,5 @@
 package com.focus.app.adapters.outbound.entities;
 
-import com.focus.app.domain.models.Task;
-import com.focus.app.domain.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

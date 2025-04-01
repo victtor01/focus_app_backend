@@ -5,12 +5,13 @@ import com.focus.app.adapters.outbound.mappers.TaskCategoryMapper;
 import com.focus.app.adapters.outbound.mappers.UserMapper;
 import com.focus.app.adapters.outbound.persistence.jpa.JpaTasksCategoriesRepository;
 import com.focus.app.application.ports.out.TasksCategoriesRepositoryPort;
-import com.focus.app.domain.models.TaskCategory;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.taskCategory.TaskCategory;
+import com.focus.app.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class TasksCategoriesRepositoryImplements implements TasksCategoriesRepositoryPort {
@@ -32,6 +33,14 @@ public class TasksCategoriesRepositoryImplements implements TasksCategoriesRepos
     @Override
     public List<TaskCategory> findAllByUser(User user) {
         return this.jpaTasksCategoriesRepository.findAllByUser(UserMapper.toEntity(user))
+            .stream()
+            .map(TaskCategoryMapper::toDomain)
+            .toList();
+    }
+
+    @Override
+    public List<TaskCategory> findAllByIds(List<UUID> ids) {
+        return this.jpaTasksCategoriesRepository.findAllByIdIn(ids)
             .stream()
             .map(TaskCategoryMapper::toDomain)
             .toList();

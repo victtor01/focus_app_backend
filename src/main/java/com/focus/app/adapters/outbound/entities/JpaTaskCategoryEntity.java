@@ -1,10 +1,8 @@
 package com.focus.app.adapters.outbound.entities;
 
-import com.focus.app.domain.models.User;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -25,9 +23,8 @@ public class JpaTaskCategoryEntity {
     @Column(nullable = false)
     private String color;
 
-    @ManyToMany
-    private List<JpaTaskEntity> tasks;
-
     @ManyToOne
     private JpaUserEntity user;
+
+
 }

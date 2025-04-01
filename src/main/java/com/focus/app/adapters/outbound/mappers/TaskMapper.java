@@ -1,7 +1,7 @@
 package com.focus.app.adapters.outbound.mappers;
 
 import com.focus.app.adapters.outbound.entities.JpaTaskEntity;
-import com.focus.app.domain.models.Task;
+import com.focus.app.domain.models.task.Task;
 
 public class TaskMapper {
     public static JpaTaskEntity toEntity(Task task) {
@@ -12,7 +12,8 @@ public class TaskMapper {
             .name(task.getName())
             .color(task.getColor())
             .user(UserMapper.toEntity(task.getUser()))
-            .reminders(null)
+            .categories(task.getCategories().stream().map(TaskCategoryMapper::toEntity).toList())
+            .reminders(task.getReminders().stream().map(ReminderMapper::toEntity).toList())
             .description(task.getDescription())
             .build();
     }
@@ -25,8 +26,9 @@ public class TaskMapper {
             .id(entity.getId())
             .name(entity.getName())
             .description(entity.getDescription())
+            .categories(entity.getCategories().stream().map(TaskCategoryMapper::toDomain).toList())
+            .reminders(entity.getReminders().stream().map(ReminderMapper::toSimple).toList())
             .color(entity.getColor())
-            .reminders(null)
             .build();
     }
 }

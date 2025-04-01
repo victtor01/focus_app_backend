@@ -1,5 +1,6 @@
 package com.focus.app.adapters.inbound.middlewares;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.shared.exceptions.ErrorResponse;
 import com.focus.app.shared.exceptions.NotFoundException;
@@ -7,17 +8,25 @@ import com.focus.app.shared.exceptions.UnauthorizedException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.validation.BindingResult;
 
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 @ControllerAdvice
 public class GlobalError {
+
+    private ResponseEntity<Map<String, String>> buildErrorResponse(String message, HttpStatus status) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("error", message);
+        return new ResponseEntity<>(errorResponse, status);
+    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, Object>> handleValidationExceptions(MethodArgumentNotValidException ex) {
@@ -44,6 +53,19 @@ public class GlobalError {
         response.put("message", "Your session has expired. Please login again.");
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidFormatException(HttpMessageNotReadableException ex) {
+        Throwable rootCause = ex.getRootCause();
+
+        if (rootCause instanceof InvalidFormatException) {
+            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.toString(), "format of date is invalid", HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+        }
+
+        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.toString(), "Have error in server, try again", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler({BadRequestException.class})

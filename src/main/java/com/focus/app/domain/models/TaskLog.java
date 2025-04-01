@@ -1,5 +1,8 @@
 package com.focus.app.domain.models;
 
+import com.focus.app.domain.models.task.Task;
+import com.focus.app.domain.models.user.User;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;

@@ -40,6 +40,6 @@ public class JpaTaskEntity {
     @JoinColumn(name = "user_id")
     private JpaUserEntity user;
 
-    @OneToMany()
+    @ManyToMany()
     private List<JpaTaskCategoryEntity> categories;
 }

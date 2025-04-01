@@ -6,7 +6,7 @@ import com.focus.app.application.ports.in.AuthenticationUtils;
 import com.focus.app.application.ports.in.TasksLogService;
 import com.focus.app.application.commands.CreateTaskLogCommand;
 import com.focus.app.domain.models.TaskLog;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

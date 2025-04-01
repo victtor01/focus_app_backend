@@ -1,15 +1,16 @@
 package com.focus.app.adapters.inbound.controllers;
 
-import com.focus.app.adapters.inbound.dtos.TaskDTO;
 import com.focus.app.adapters.inbound.dtos.request.CreateTaskRequest;
+import com.focus.app.adapters.inbound.dtos.response.TaskResponse;
 import com.focus.app.adapters.inbound.mappers.TaskMapper;
 import com.focus.app.application.commands.CreateTaskCommand;
 import com.focus.app.application.ports.in.AuthenticationUtils;
 import com.focus.app.application.ports.in.TasksService;
-import com.focus.app.domain.models.Task;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.task.Task;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.shared.utils.MessageResponse;
 import jakarta.validation.Valid;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class TasksController {
     }
 
     @PostMapping()
-    public ResponseEntity<Task> create(@RequestBody @Valid CreateTaskRequest createTaskRecord) {
+    public ResponseEntity<TaskResponse> create(@RequestBody @Valid CreateTaskRequest createTaskRecord) {
 
         User user = authenticationUtils.getUser();
 
@@ -44,20 +45,31 @@ public class TasksController {
 
         Task task = tasksService.create(user, createTaskCommand);
 
-        return ResponseEntity.status(HttpStatus.OK).body(task);
+        return ResponseEntity.status(HttpStatus.OK).body(TaskMapper.toResponse(task));
+    }
+
+    @GetMapping("{taskId}")
+    public ResponseEntity<TaskResponse> findById(@PathVariable UUID taskId) {
+        User user = authenticationUtils.getUser();
+        Task task = tasksService.findByIdAndUser(taskId, user);
+
+        return ResponseEntity.ok(TaskMapper.toResponse(task));
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> findAll() {
+    public ResponseEntity<List<TaskResponse>> findAll() {
         User user = authenticationUtils.getUser();
 
-        List<TaskDTO> tasks = tasksService.findAllByUser(user).stream().map(TaskMapper::toDTO).toList();
+        List<TaskResponse> tasks = tasksService.findAllByUser(user)
+            .stream()
+            .map(TaskMapper::toResponse)
+            .toList();
 
         return ResponseEntity.ok(tasks);
     }
 
     @DeleteMapping("{taskId}")
-    public ResponseEntity delete(@PathVariable UUID taskId) {
+    public ResponseEntity<MessageResponse> delete(@PathVariable UUID taskId) {
         User user = authenticationUtils.getUser();
         tasksService.delete(taskId, user);
 

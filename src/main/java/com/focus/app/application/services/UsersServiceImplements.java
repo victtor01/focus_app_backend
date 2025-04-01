@@ -2,7 +2,7 @@ package com.focus.app.application.services;
 
 
 import com.focus.app.application.ports.in.UsersService;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 import com.focus.app.application.commands.CreateUserCommand;
 import com.focus.app.shared.utils.EmailAddress;
 import com.focus.app.shared.exceptions.BadRequestException;

@@ -1,7 +1,7 @@
 package com.focus.app.adapters.outbound.mappers;
 
 import com.focus.app.adapters.outbound.entities.JpaTaskCategoryEntity;
-import com.focus.app.domain.models.TaskCategory;
+import com.focus.app.domain.models.taskCategory.TaskCategory;
 
 public class TaskCategoryMapper {
     public static TaskCategory toDomain(JpaTaskCategoryEntity taskCategory) {
@@ -12,7 +12,6 @@ public class TaskCategoryMapper {
             .name(taskCategory.getName())
             .color(taskCategory.getColor())
             .user(UserMapper.toDomain(taskCategory.getUser()))
-            .tasks(taskCategory.getTasks().stream().map(TaskMapper::toDomain).toList())
             .build();
     }
 
@@ -24,7 +23,6 @@ public class TaskCategoryMapper {
             .name(taskCategory.getName())
             .color(taskCategory.getColor())
             .user(UserMapper.toEntity(taskCategory.getUser()))
-            .tasks(taskCategory.getTasks().stream().map(TaskMapper::toEntity).toList())
             .build();
     }
 

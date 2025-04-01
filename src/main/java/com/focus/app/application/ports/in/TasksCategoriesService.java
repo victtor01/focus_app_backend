@@ -2,8 +2,8 @@ package com.focus.app.application.ports.in;
 
 
 import com.focus.app.application.commands.CreateTaskCategoryCommand;
-import com.focus.app.domain.models.TaskCategory;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.taskCategory.TaskCategory;
+import com.focus.app.domain.models.user.User;
 
 import java.util.List;
 

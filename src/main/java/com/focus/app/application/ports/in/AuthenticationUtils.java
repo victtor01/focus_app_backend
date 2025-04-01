@@ -1,7 +1,6 @@
 package com.focus.app.application.ports.in;
 
-import com.focus.app.adapters.outbound.entities.JpaUserEntity;
-import com.focus.app.domain.models.User;
+import com.focus.app.domain.models.user.User;
 
 import java.util.UUID;
 
