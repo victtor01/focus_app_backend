@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
@@ -42,5 +43,16 @@ public class TasksLogRepositoryImplements implements TasksLogRepositoryPort {
             .stream()
             .map(TaskLogMapper::toDomain)
             .toList();
+    }
+
+    @Override
+    public Optional<TaskLog> findById(UUID taskLogId) {
+        return this.jpaTasksLogRepository.findById(taskLogId)
+            .map(TaskLogMapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(UUID taskLogId) {
+        this.jpaTasksLogRepository.deleteById(taskLogId);
     }
 }

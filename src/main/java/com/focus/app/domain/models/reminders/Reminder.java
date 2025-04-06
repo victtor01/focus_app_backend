@@ -1,7 +1,7 @@
 package com.focus.app.domain.models.reminders;
 
-import com.focus.app.domain.enums.ReminderDay;
 import com.focus.app.domain.enums.ReminderType;
+import com.focus.app.domain.models.TaskLog;
 import com.focus.app.domain.models.reminders.builder.ReminderBuilder;
 import com.focus.app.domain.models.task.Task;
 import com.focus.app.domain.models.user.User;
@@ -13,6 +13,7 @@ import java.util.UUID;
 
 public class Reminder {
     private UUID id;
+    private List<TaskLog> tasksLog;
     private List<LocalDate> customReminderDates;
     private List<LocalDate> reminderDaysOfWeek;
     private ReminderType reminderType = ReminderType.WEEKLY;
@@ -32,6 +33,7 @@ public class Reminder {
         this.reminderType = reminderBuilder.getReminderType();
         this.reminderHour = reminderBuilder.getReminderHour();
         this.isRecurring = reminderBuilder.getIsRecurring();
+        this.tasksLog = reminderBuilder.getTasksLogs();
         this.task = reminderBuilder.getTask();
         this.user = reminderBuilder.getUser();
     }
@@ -112,5 +114,13 @@ public class Reminder {
 
     public void setReminderType(ReminderType reminderType) {
         this.reminderType = reminderType;
+    }
+
+    public List<TaskLog> getTasksLog() {
+        return tasksLog;
+    }
+
+    public void setTasksLog(List<TaskLog> tasksLog) {
+        this.tasksLog = tasksLog;
     }
 }

@@ -38,5 +38,10 @@ public class JpaTaskLogEntity {
     @JoinColumn(name = "task_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private JpaTaskEntity task;
+
+    @ManyToOne()
+    @JoinColumn(name = "reminder_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private JpaReminderEntity reminder;
 }
 

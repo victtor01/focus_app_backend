@@ -1,9 +1,7 @@
 package com.focus.app.adapters.outbound.persistence.jpa;
 
-import com.focus.app.adapters.inbound.dtos.response.ReminderResponse;
 import com.focus.app.adapters.outbound.entities.JpaReminderEntity;
 import com.focus.app.adapters.outbound.entities.JpaUserEntity;
-import com.focus.app.domain.models.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +21,6 @@ public interface JpaRemindersRepository extends JpaRepository<JpaReminderEntity,
     @Transactional
     @Query("DELETE FROM JpaReminderEntity r WHERE r.id = :id")
     void deleteById(@Param("id") UUID id);
+
+    List<JpaReminderEntity> findAllByUserId(UUID userId);
 }

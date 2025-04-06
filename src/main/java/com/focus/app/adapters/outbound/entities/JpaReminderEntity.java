@@ -48,4 +48,8 @@ public class JpaReminderEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private JpaUserEntity user;
+
+    @OneToMany(mappedBy = "reminder")
+    private List<JpaTaskLogEntity> tasksLogs;
+
 }

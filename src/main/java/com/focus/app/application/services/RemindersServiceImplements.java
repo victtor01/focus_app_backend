@@ -72,6 +72,7 @@ public class RemindersServiceImplements implements RemindersService {
         Reminder reminder = Reminder.builder()
             .customReminderDates(createReminderRecord.customRemindersDates())
             .reminderDaysOfWeek(createReminderRecord.daysOfWeek())
+            .isRecurring(createReminderRecord.repeat())
             .reminderType(reminderType)
             .reminderHour(null)
             .user(user)

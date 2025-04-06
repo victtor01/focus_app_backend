@@ -1,7 +1,7 @@
 package com.focus.app.domain.models.reminders.builder;
 
-import com.focus.app.domain.enums.ReminderDay;
 import com.focus.app.domain.enums.ReminderType;
+import com.focus.app.domain.models.TaskLog;
 import com.focus.app.domain.models.reminders.Reminder;
 import com.focus.app.domain.models.task.Task;
 import com.focus.app.domain.models.user.User;
@@ -15,6 +15,7 @@ public class ReminderBuilder {
     private UUID id;
     private List<LocalDate> customReminderDates = List.of();
     private List<LocalDate> reminderDaysOfWeek = List.of();
+    private List<TaskLog> tasksLogs = List.of();
     private ReminderType reminderType;
     private LocalTime reminderHour;
     private boolean isRecurring;
@@ -54,6 +55,12 @@ public class ReminderBuilder {
         this.reminderHour = reminderHour;
         return this;
     }
+
+    public ReminderBuilder tasksLogs(List<TaskLog> tasksLogs) {
+        this.tasksLogs = tasksLogs;
+        return this;
+    }
+
 
     public ReminderBuilder task(Task task) {
         this.task = task;
@@ -99,5 +106,13 @@ public class ReminderBuilder {
 
     public void setRecurring(boolean recurring) {
         isRecurring = recurring;
+    }
+
+    public List<TaskLog> getTasksLogs() {
+        return tasksLogs;
+    }
+
+    public void setTasksLogs(List<TaskLog> tasksLogs) {
+        this.tasksLogs = tasksLogs;
     }
 }

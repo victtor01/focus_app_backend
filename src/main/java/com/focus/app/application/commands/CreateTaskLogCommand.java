@@ -7,6 +7,7 @@ import java.util.UUID;
 public record CreateTaskLogCommand(
     LocalDate day,
     UUID taskId,
+    UUID reminderId,
     LocalTime hour
 ) {
 }

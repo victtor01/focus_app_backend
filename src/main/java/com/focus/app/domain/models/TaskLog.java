@@ -1,5 +1,6 @@
 package com.focus.app.domain.models;
 
+import com.focus.app.domain.models.reminders.Reminder;
 import com.focus.app.domain.models.task.Task;
 import com.focus.app.domain.models.user.User;
 
@@ -13,16 +14,18 @@ public class TaskLog {
     private LocalTime hour;
     private User user;
     private Task task;
+    private Reminder reminder;
 
     public TaskLog() {
     }
 
-    public TaskLog(UUID id, LocalDate day, LocalTime hour, User user, Task task) {
+    public TaskLog(UUID id, LocalDate day, LocalTime hour, User user, Task task, Reminder reminder) {
         this.id = id;
         this.day = day;
         this.hour = hour;
         this.user = user;
         this.task = task;
+        this.reminder = reminder;
     }
 
     public UUID getId() {
@@ -63,6 +66,14 @@ public class TaskLog {
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    public Reminder getReminder() {
+        return reminder;
+    }
+
+    public void setReminder(Reminder reminder) {
+        this.reminder = reminder;
     }
 }
 

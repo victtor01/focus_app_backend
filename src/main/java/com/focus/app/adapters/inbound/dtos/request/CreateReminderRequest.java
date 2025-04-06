@@ -17,6 +17,8 @@ public record CreateReminderRequest(
 
     List<LocalDate> customReminderDates,
 
-    List<LocalDate> reminderDaysOfWeek
+    List<LocalDate> reminderDaysOfWeek,
+
+    boolean repeat
 ){
 }

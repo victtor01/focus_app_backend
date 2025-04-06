@@ -11,6 +11,7 @@ public record CreateReminderCommand(
     UUID taskId,
     List<LocalDate> customRemindersDates,
     List<LocalDate> daysOfWeek,
-    ReminderType reminderType
+    ReminderType reminderType,
+    boolean repeat
 ) {
 }

@@ -10,7 +10,6 @@ import com.focus.app.domain.models.reminders.Reminder;
 import com.focus.app.domain.models.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +29,14 @@ public class TasksRemindersRepositoryImplements implements RemindersRepositoryPo
     public List<Reminder> findAllByUser(User user) {
         JpaUserEntity userEntity = UserMapper.toEntity(user);
         return this.jpaRemindersRepository.findAllByUser(userEntity)
+            .stream()
+            .map(ReminderMapper::toDomain)
+            .toList();
+    }
+
+    @Override
+    public List<Reminder> findAllByUserId(UUID userId) {
+        return this.jpaRemindersRepository.findAllByUserId(userId)
             .stream()
             .map(ReminderMapper::toDomain)
             .toList();

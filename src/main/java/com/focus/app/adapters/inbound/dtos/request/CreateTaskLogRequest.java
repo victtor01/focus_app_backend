@@ -13,6 +13,9 @@ public record CreateTaskLogRequest(
     @NotNull
     UUID taskId,
 
+    @NotNull
+    UUID reminderId,
+
     LocalTime hour
 ) {
 }

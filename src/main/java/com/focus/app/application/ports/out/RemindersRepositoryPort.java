@@ -9,6 +9,7 @@ import java.util.UUID;
 
 public interface RemindersRepositoryPort {
     List<Reminder> findAllByUser(User user);
+    List<Reminder> findAllByUserId(UUID userId);
     Reminder save(Reminder reminder);
     Optional<Reminder> findById(UUID reminderId);
     void delete(UUID reminderId);
