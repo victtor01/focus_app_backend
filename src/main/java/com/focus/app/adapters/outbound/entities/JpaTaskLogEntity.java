@@ -36,7 +36,7 @@ public class JpaTaskLogEntity {
 
     @ManyToOne()
     @JoinColumn(name = "task_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private JpaTaskEntity task;
 
     @ManyToOne()

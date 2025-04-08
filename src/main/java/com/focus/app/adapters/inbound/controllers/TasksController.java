@@ -10,7 +10,6 @@ import com.focus.app.domain.models.task.Task;
 import com.focus.app.domain.models.user.User;
 import com.focus.app.shared.utils.MessageResponse;
 import jakarta.validation.Valid;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
