@@ -7,17 +7,20 @@ import com.focus.app.application.ports.out.RemindersRepositoryPort;
 import com.focus.app.application.ports.out.TasksLogRepositoryPort;
 import com.focus.app.application.ports.out.TasksRepositoryPort;
 import com.focus.app.application.utils.CalendarUtils;
+import com.focus.app.domain.enums.ReminderType;
 import com.focus.app.domain.models.reminders.Reminder;
 import com.focus.app.domain.models.task.Task;
 import com.focus.app.domain.models.TaskLog;
 import com.focus.app.domain.models.user.User;
 import com.focus.app.application.commands.CreateTaskLogCommand;
+import com.focus.app.shared.exceptions.BadRequestException;
 import com.focus.app.shared.exceptions.NotFoundException;
 import com.focus.app.shared.exceptions.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
 
 @Service
@@ -39,24 +42,45 @@ public class TasksLogServiceImplements implements TasksLogService {
 
     @Override
     public TaskLog create(CreateTaskLogCommand createTaskLogRecord, User user) {
-        Task task = this.tasksRepository.findById(createTaskLogRecord.taskId()).orElseThrow(
-            () -> new NotFoundException("task to add log not found!")
-        );
+        Task task = tasksRepository.findById(createTaskLogRecord.taskId())
+            .orElseThrow(() -> new NotFoundException("task to add log not found!"));
 
         TaskLog taskLog = new TaskLog();
         taskLog.setHour(createTaskLogRecord.hour());
         taskLog.setDay(createTaskLogRecord.day());
+        taskLog.setDuration(createTaskLogRecord.duration());
         taskLog.setUser(user);
         taskLog.setTask(task);
 
         if (createTaskLogRecord.reminderId() != null) {
-            Reminder reminder = this.remindersRepositoryPort.findById(createTaskLogRecord.reminderId())
+            Reminder reminder = remindersRepositoryPort.findById(createTaskLogRecord.reminderId())
                 .orElseThrow(() -> new NotFoundException("reminder not found!"));
 
+            validateReminder(reminder, createTaskLogRecord.day());
             taskLog.setReminder(reminder);
         }
 
-        return this.tasksLogRepository.save(taskLog);
+        return tasksLogRepository.save(taskLog);
+    }
+
+    private void validateReminder(Reminder reminder, LocalDate logDay) {
+        if (!reminder.getRecurring()) {
+            Month expectedMonth = reminder.getCustomReminderDates().getFirst().getMonth();
+            if (!logDay.getMonth().equals(expectedMonth)) {
+                throw new BadRequestException("Dates must be in the same month");
+            }
+        }
+
+        List<LocalDate> referenceDates = reminder.getReminderType() == ReminderType.WEEKLY
+            ? reminder.getReminderDaysOfWeek()
+            : reminder.getCustomReminderDates();
+
+        boolean match = referenceDates.stream()
+            .anyMatch(date -> date.getDayOfWeek() == logDay.getDayOfWeek());
+
+        if (!match) {
+            throw new BadRequestException("Dates do not match");
+        }
     }
 
     @Override

@@ -39,7 +39,8 @@ public class TasksLogController {
             createTaskLogRequest.day(),
             createTaskLogRequest.taskId(),
             createTaskLogRequest.reminderId(),
-            createTaskLogRequest.hour()
+            createTaskLogRequest.hour(),
+            createTaskLogRequest.duration()
         );
 
         TaskLog created = this.tasksLogService.create(createTaskLogCommand, user);

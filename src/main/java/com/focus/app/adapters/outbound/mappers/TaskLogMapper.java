@@ -13,7 +13,8 @@ public class TaskLogMapper {
             taskLogEntity.getHour(),
             UserMapper.toDomain(taskLogEntity.getUser()),
             TaskMapper.toDomain(taskLogEntity.getTask()),
-            ReminderMapper.toSimple(taskLogEntity.getReminder())
+            ReminderMapper.toSimple(taskLogEntity.getReminder()),
+            taskLogEntity.getDuration()
         );
     }
 
@@ -27,6 +28,7 @@ public class TaskLogMapper {
             .reminder(ReminderMapper.toEntity(taskLog.getReminder()))
             .day(taskLog.getDay())
             .hour(taskLog.getHour())
+            .duration(taskLog.getDuration())
             .build();
     }
 }

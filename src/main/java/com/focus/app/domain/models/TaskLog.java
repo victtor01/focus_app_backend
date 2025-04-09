@@ -15,17 +15,19 @@ public class TaskLog {
     private User user;
     private Task task;
     private Reminder reminder;
+    private Long duration = 0L;
 
     public TaskLog() {
     }
 
-    public TaskLog(UUID id, LocalDate day, LocalTime hour, User user, Task task, Reminder reminder) {
+    public TaskLog(UUID id, LocalDate day, LocalTime hour, User user, Task task, Reminder reminder, Long duration) {
         this.id = id;
         this.day = day;
         this.hour = hour;
         this.user = user;
         this.task = task;
         this.reminder = reminder;
+        this.duration = duration;
     }
 
     public UUID getId() {
@@ -74,6 +76,14 @@ public class TaskLog {
 
     public void setReminder(Reminder reminder) {
         this.reminder = reminder;
+    }
+
+    public Long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Long duration) {
+        this.duration = duration;
     }
 }
 

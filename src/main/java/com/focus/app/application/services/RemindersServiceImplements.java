@@ -83,6 +83,21 @@ public class RemindersServiceImplements implements RemindersService {
     }
 
     @Override
+    public Reminder findByIdAndUser(UUID reminderId, UUID userId) {
+        Reminder reminder = this.remindersRepository.findById(reminderId).orElseThrow(
+            () -> new NotFoundException("reminder not found!")
+        );
+
+        UUID userIdIn = reminder.getUser().getId();
+
+        if(!userIdIn.equals(userId)) {
+            throw new NotFoundException("this reminder not belongs to you");
+        }
+
+        return reminder;
+    }
+
+    @Override
     public List<Reminder> findAllByUser(User user) {
         return this.remindersRepository.findAllByUser(user);
     }

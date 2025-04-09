@@ -21,6 +21,7 @@ public class TaskMapper {
         return TaskResponse.builder()
             .id(task.getId())
             .name(task.getName())
+            .categories(task.getCategories().stream().map(CategoryMapper::toResponse).toList())
             .description(task.getDescription())
             .build();
     }

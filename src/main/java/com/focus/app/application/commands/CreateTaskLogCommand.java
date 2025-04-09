@@ -8,6 +8,7 @@ public record CreateTaskLogCommand(
     LocalDate day,
     UUID taskId,
     UUID reminderId,
-    LocalTime hour
+    LocalTime hour,
+    long duration
 ) {
 }

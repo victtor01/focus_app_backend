@@ -1,7 +1,6 @@
 package com.focus.app.adapters.inbound.dtos.response;
 
 import com.focus.app.domain.enums.ReminderType;
-import com.focus.app.domain.models.TaskLog;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,8 +16,7 @@ public class ReminderResponse {
     private UUID id;
     private List<LocalDate> customReminderDates;
     private List<LocalDate> reminderDaysOfWeek;
-    private List<TaskCategoryResponse> categories;
+    private List<TaskLogResponse> tasksLogs;
     private ReminderType reminderType;
     private TaskResponse task;
-    private List<TaskLog> tasksLogs;
 }

@@ -16,6 +16,8 @@ public record CreateTaskLogRequest(
     @NotNull
     UUID reminderId,
 
-    LocalTime hour
+    LocalTime hour,
+
+    long duration
 ) {
 }

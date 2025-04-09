@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public interface RemindersService {
     Reminder save(User user, CreateReminderCommand createReminderRecord);
+    Reminder findByIdAndUser(UUID reminderId, UUID userId);
     List<Reminder> findAllByUser(User user);
     void delete(User user, UUID reminderId);
+
 }

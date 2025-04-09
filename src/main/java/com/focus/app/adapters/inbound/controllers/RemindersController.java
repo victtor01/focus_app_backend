@@ -86,6 +86,14 @@ public class RemindersController {
         return ResponseEntity.ok(responseCalendar);
     }
 
+    @GetMapping("{reminderId}")
+    public ResponseEntity<ReminderResponse> findById(@PathVariable UUID reminderId) {
+        UUID userId = authenticationUtils.getId();
+        Reminder reminder = this.remindersService.findByIdAndUser(reminderId, userId);
+
+        return ResponseEntity.ok(ReminderMapper.toResponse(reminder));
+    }
+
     @DeleteMapping("{reminderId}")
     public ResponseEntity<String> delete(@PathVariable UUID reminderId) {
         User user = authenticationUtils.getUser();

@@ -34,6 +34,9 @@ public class JpaTaskLogEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private JpaUserEntity user;
 
+    @Column()
+    private Long duration;
+
     @ManyToOne()
     @JoinColumn(name = "task_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)

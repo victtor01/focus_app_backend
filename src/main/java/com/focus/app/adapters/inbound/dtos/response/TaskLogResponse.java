@@ -21,4 +21,5 @@ public class TaskLogResponse {
     private LocalTime hour;
     private ReminderResponse reminder;
     private TaskResponse task;
+    private Long duration;
 }
